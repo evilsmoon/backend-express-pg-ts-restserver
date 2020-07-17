@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node build/index.js",
     "dev": "concurrently \"tsc --watch\"  \"nodemon build/index.js\" ",
     "build": "tsc "
   },
