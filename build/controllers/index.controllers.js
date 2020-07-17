@@ -13,8 +13,10 @@ exports.getcommunitys = void 0;
 const database_1 = require("../database");
 exports.getcommunitys = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const client = yield database_1.pool.connect();
         const resp = yield database_1.pool.query("select nombre_comunidad as ciudad,sum(cantidad)  as Cantidad from nacimientos ,ciudad where nacimientos.id_ciudad = ciudad.id_ciudad group by nombre_comunidad order by nombre_comunidad");
         return res.status(200).json(resp.rows);
+        client.release();
     }
     catch (error) {
         return res.status(500).json("Internal Server Error" + error);
