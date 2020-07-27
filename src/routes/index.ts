@@ -1,7 +1,7 @@
 import {Router} from 'express';
-import { getcommunitys } from '../controllers/index.controllers';
+import { getcommunitys ,getcommunitysMenor,getcommunitysMayor} from '../controllers/index.controllers';
 const router = Router();
 router.get("/communitys", getcommunitys);
-router.get("/users/:id", );
-
+router.get("/communitysmenor/:id", getcommunitysMenor);
+router.get("/communitysmayor/:id", getcommunitysMayor);
 export default router;
