@@ -16,6 +16,31 @@ exports.getcommunitys = (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         const client = yield database_1.pool.connect();
         const resp = yield database_1.pool.query("select nombre_comunidad as ciudad, sum(cantidad) as cantidad from dim_ciudad , dim_madre,dim_padre,fact_nacimientos where fact_nacimientos.sk_ciudad = dim_ciudad.sk_ciudad and fact_nacimientos.sk_padre = fact_nacimientos.sk_padre and fact_nacimientos.sk_madre = dim_madre.sk_madre group by ciudad order by ciudad");
+<<<<<<< HEAD
+=======
+        return res.status(200).json(resp.rows);
+        client.release();
+    }
+    catch (error) {
+        return res.status(500).json("Internal Server Error" + error);
+    }
+});
+exports.getcommunitysMenor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const client = yield database_1.pool.connect();
+        const resp = yield database_1.pool.query(`select nombre_comunidad as ciudad, sum(cantidad) as cantidad from dim_ciudad , dim_madre,dim_padre,fact_nacimientos where fact_nacimientos.sk_ciudad = dim_ciudad.sk_ciudad and fact_nacimientos.sk_padre = fact_nacimientos.sk_padre and fact_nacimientos.sk_madre = dim_madre.sk_madre group by ciudad having sum(cantidad) <  ${parseInt(req.params.id)} order by ciudad`);
+        return res.status(200).json(resp.rows);
+        client.release();
+    }
+    catch (error) {
+        return res.status(500).json("Internal Server Error" + error);
+    }
+});
+exports.getcommunitysMayor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const client = yield database_1.pool.connect();
+        const resp = yield database_1.pool.query(`select nombre_comunidad as ciudad, sum(cantidad) as cantidad from dim_ciudad , dim_madre,dim_padre,fact_nacimientos where fact_nacimientos.sk_ciudad = dim_ciudad.sk_ciudad and fact_nacimientos.sk_padre = fact_nacimientos.sk_padre and fact_nacimientos.sk_madre = dim_madre.sk_madre group by ciudad having sum(cantidad) > ${parseInt(req.params.id)} order by ciudad`);
+>>>>>>> f481d7c4b4c45f72850e3dda7e1291beb2a43ee6
         return res.status(200).json(resp.rows);
         client.release();
     }
